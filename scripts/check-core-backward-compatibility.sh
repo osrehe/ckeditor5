@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+# @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
 # For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 # Get branch name.
@@ -10,7 +10,7 @@ INITIAL_BRANCH=$( git branch --show-current )
 yarn dll:build
 
 # Check out to the latest tag.
-LAST_TAG=$( git tag --sort=committerdate | grep -E '[0-9]' --color=none | tail -1 )
+LAST_TAG=$( git tag --sort=-creatordate | head -1 )
 git checkout $LAST_TAG
 
 # Prepare a DLL build for a single feature.

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -49,7 +49,10 @@ describe( 'SelectionObserver', () => {
 			domDocument.getSelection().removeAllRanges();
 
 			viewDocument.isFocused = true;
+
 			domMain.focus();
+
+			viewDocument._isFocusChanging = false;
 		} );
 
 		selectionObserver.enable();
@@ -82,6 +85,18 @@ describe( 'SelectionObserver', () => {
 			expect( newViewRange.start.offset ).to.equal( 2 );
 			expect( newViewRange.end.parent ).to.equal( viewFoo );
 			expect( newViewRange.end.offset ).to.equal( 2 );
+
+			done();
+		} );
+
+		changeDomSelection();
+	} );
+
+	it( 'should call focusObserver#flush when selection is changed', done => {
+		const flushSpy = testUtils.sinon.spy( selectionObserver.focusObserver, 'flush' );
+
+		viewDocument.on( 'selectionChange', () => {
+			sinon.assert.calledOnce( flushSpy );
 
 			done();
 		} );
@@ -217,6 +232,7 @@ describe( 'SelectionObserver', () => {
 		} );
 		const selectionChangeSpy = sinon.spy();
 
+		selectionObserver._clearInfiniteLoop();
 		viewDocument.on( 'selectionChange', selectionChangeSpy );
 
 		return new Promise( resolve => {

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -324,7 +324,7 @@ export default class PluginCollection {
 				 *
 				 * Soft requirements were introduced in version 26.0.0. If you happen to stumble upon this error
 				 * when upgrading to version 26.0.0, read also the
-				 * {@glink updating/migration-to-26 Migration to 26.0.0} guide.
+				 * {@glink updating/guides/update-to-26 Migration to 26.0.0} guide.
 				 *
 				 * @error plugincollection-soft-required
 				 * @param {String} missingPlugin The name of the required plugin.
