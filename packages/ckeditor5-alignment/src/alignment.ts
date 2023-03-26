@@ -7,7 +7,7 @@
  * @module alignment/alignment
  */
 
-import { Plugin, type PluginDependencies } from 'ckeditor5/src/core';
+import { Plugin } from 'ckeditor5/src/core';
 
 import AlignmentEditing from './alignmentediting';
 import AlignmentUI from './alignmentui';
@@ -15,7 +15,7 @@ import AlignmentUI from './alignmentui';
 /**
  * The text alignment plugin.
  *
- * For a detailed overview, check the {@glink features/text-alignment Text alignment feature documentation}
+ * For a detailed overview, check the {@glink features/text-alignment Text alignment} feature guide
  * and the {@glink api/alignment package page}.
  *
  * This is a "glue" plugin which loads the {@link module:alignment/alignmentediting~AlignmentEditing} and
@@ -25,8 +25,8 @@ export default class Alignment extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
-	public static get requires(): PluginDependencies {
-		return [ AlignmentEditing, AlignmentUI ];
+	public static get requires() {
+		return [ AlignmentEditing, AlignmentUI ] as const;
 	}
 
 	/**
@@ -34,11 +34,5 @@ export default class Alignment extends Plugin {
 	 */
 	public static get pluginName(): 'Alignment' {
 		return 'Alignment';
-	}
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ Alignment.pluginName ]: Alignment;
 	}
 }

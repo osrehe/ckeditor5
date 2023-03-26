@@ -8,6 +8,8 @@ modified_at: 2021-06-17
 
 # Image styles
 
+The image styles feature lets you adjust the appearance of images. It works by applying CSS classes to images or changing their type from inline to block or vice versa.
+
 ## Overview
 This package allows for adjusting the image appearance by:
 * **Applying CSS classes** - adding a particular [predefined](#ready-to-use-styles) or [custom](#configuring-the-styles) CSS class or removing any style-related CSS class,
@@ -95,6 +97,10 @@ You can change the style of an individual image using the contextual toolbar inv
 
 </div>
 
+<info-box info>
+	All demos in this guide only present a limited set of features for clarity. Visit the {@link examples/builds/full-featured-editor full-featured editor example} to see more in action.
+</info-box>
+
 The editor above does not require any configuration, using one of the following builds: classic, inline, balloon or balloon-block, for example:
 
 ```js
@@ -102,8 +108,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic/src/ckeditor';
 
 ClassicEditor
 	.create( document.querySelector( '#editor' ) )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 ### Presentational styles
@@ -146,8 +152,8 @@ import DecoupledEditor from '@ckeditor/ckeditor5-editor-decoupled/src/decouplede
 
 DecoupledEditor.
 	.create( document.querySelector( '#editor' ) )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 <info-box warning>
@@ -176,7 +182,8 @@ The editor presented above uses custom image styles, custom image toolbar config
 ```js
 ClassicEditor
 	.create( document.querySelector( '#editor' ), {
-		...
+		// More of editor's config.
+		// ...
 		image: {
 			styles: {
 				// Defining custom styling options for the images.
@@ -232,8 +239,8 @@ ClassicEditor
 			]
 		}
 	} )
-	.then( ... )
-	.catch( ... );
+	.then( /* ... */ )
+	.catch( /* ... */ );
 ```
 
 It also applies multiple CSS rules to not only display custom image styles (the `'image-margin-right'`, `'image-margin-left'` and `'image-side'` classes) properly, but also to provide the default {@link installation/advanced/content-styles content styles}, so the appearance of headers, paragraphs, links, captions and newly inserted images is consistent.
@@ -433,7 +440,7 @@ The {@link module:image/imagestyle~ImageStyle} plugin registers:
 	```
 
 <info-box>
-	We recommend using the official {@link framework/guides/development-tools#ckeditor-5-inspector CKEditor 5 inspector} for development and debugging. It will give you tons of useful information about the state of the editor such as internal data structures, selection, commands, and many more.
+	We recommend using the official {@link framework/development-tools#ckeditor-5-inspector CKEditor 5 inspector} for development and debugging. It will give you tons of useful information about the state of the editor such as internal data structures, selection, commands, and many more.
 </info-box>
 
 ## Contribute

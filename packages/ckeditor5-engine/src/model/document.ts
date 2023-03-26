@@ -14,7 +14,7 @@ import RootElement from './rootelement';
 
 import type { SelectionChangeEvent } from './selection';
 import type { default as Model, ModelApplyOperationEvent } from './model';
-import type { MarkerCollectionUpdateEvent, MarkerCollectionChangeEvent } from './markercollection';
+import type { MarkerCollectionUpdateEvent, MarkerChangeEvent } from './markercollection';
 import type Batch from './batch';
 import type Position from './position';
 import type Range from './range';
@@ -38,7 +38,7 @@ const graveyardName = '$graveyard';
  * Data model's document. It contains the model's structure, its selection and the history of changes.
  *
  * Read more about working with the model in
- * {@glink framework/guides/architecture/editing-engine#model introduction to the the editing engine's architecture}.
+ * {@glink framework/architecture/editing-engine#model introduction to the the editing engine's architecture}.
  *
  * Usually, the document contains just one {@link module:engine/model/document~Document#roots root element}, so
  * you can retrieve it by just calling {@link module:engine/model/document~Document#getRoot} without specifying its name:
@@ -80,7 +80,7 @@ export default class Document extends EmitterMixin() {
 	/**
 	 * Post-fixer callbacks registered to the model document.
 	 */
-	private readonly _postFixers: Set<( writer: Writer ) => boolean>;
+	private readonly _postFixers: Set<ModelPostFixer>;
 
 	/**
 	 * A boolean indicates whether the selection has changed until
@@ -141,7 +141,7 @@ export default class Document extends EmitterMixin() {
 
 			if ( oldRange === null ) {
 				// If this is a new marker, add a listener that will buffer change whenever marker changes.
-				marker.on<MarkerCollectionChangeEvent>( 'change', ( evt, oldRange ) => {
+				marker.on<MarkerChangeEvent>( 'change', ( evt, oldRange ) => {
 					const markerData = marker.getData();
 
 					this.differ.bufferMarkerChange(
@@ -266,7 +266,7 @@ export default class Document extends EmitterMixin() {
 	 * } );
 	 * ```
 	 */
-	public registerPostFixer( postFixer: ( writer: Writer ) => boolean ): void {
+	public registerPostFixer( postFixer: ModelPostFixer ): void {
 		this._postFixers.add( postFixer );
 	}
 
@@ -403,7 +403,7 @@ export default class Document extends EmitterMixin() {
 		} while ( wasFixed );
 	}
 
-	// @if CK_DEBUG_ENGINE // log( version = null ) {
+	// @if CK_DEBUG_ENGINE // public log( version: any = null ): void {
 	// @if CK_DEBUG_ENGINE // 	version = version === null ? this.version : version;
 	// @if CK_DEBUG_ENGINE // 	logDocument( this, version );
 	// @if CK_DEBUG_ENGINE // }
@@ -437,13 +437,19 @@ export default class Document extends EmitterMixin() {
  * } );
  * ```
  *
- * @eventName change
+ * @eventName ~Document#change
+ * @eventName ~Document#change:data
  * @param batch The batch that was used in the executed changes block.
  */
 export type DocumentChangeEvent = {
 	name: 'change' | 'change:data';
 	args: [ batch: Batch ];
 };
+
+/**
+ * Callback passed as an argument to the {@link module:engine/model/document~Document#registerPostFixer} method.
+ */
+export type ModelPostFixer = ( writer: Writer ) => boolean;
 
 /**
  * Checks whether given range boundary position is valid for document selection, meaning that is not between

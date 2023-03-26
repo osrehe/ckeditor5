@@ -19,7 +19,7 @@ import type { MentionAttribute } from './mention';
  *
  * The command is registered by {@link module:mention/mentionediting~MentionEditing} as `'mention'`.
  *
- * To insert a mention onto a range, execute the command and specify a mention object with a range to replace:
+ * To insert a mention into a range, execute the command and specify a mention object with a range to replace:
  *
  * ```ts
  * const focus = editor.model.document.selection.focus;
@@ -96,7 +96,7 @@ export default class MentionCommand extends Command {
 			 *
 			 * Incorrect markers: `'@@'`, `'[@'`.
 			 *
-			 * See {@link module:mention/mention~MentionConfig}.
+			 * See {@link module:mention/mentionconfig~MentionConfig}.
 			 *
 			 * @error mentioncommand-incorrect-marker
 			 */
@@ -132,7 +132,7 @@ export default class MentionCommand extends Command {
 			 * ]
 			 * ```
 			 *
-			 * See {@link module:mention/mention~MentionConfig}.
+			 * See {@link module:mention/mentionconfig~MentionConfig}.
 			 *
 			 * @error mentioncommand-incorrect-id
 			 */

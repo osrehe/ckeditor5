@@ -15,7 +15,7 @@ modified_at: 2022-10-05
 
 ## Update to CKEditor 5 v35.2.0
 
-For the entire list of changes introduced in version 35.2.0, see the [changelog for CKEditor 5 v34.0.0](https://github.com/ckeditor/ckeditor5/blob/stable/CHANGELOG.md#3520-2022-10-04).
+For the entire list of changes introduced in version 35.2.0, see the [release notes for CKEditor 5 v35.2.0](https://github.com/ckeditor/ckeditor5/releases/tag/v35.2.0).
 
 Listed below are the most important changes that require your attention when upgrading to CKEditor 5 v35.2.0.
 
@@ -92,14 +92,14 @@ The rest of the import path remained unchanged (`/theme/icons/`).
 
 ## Update to CKEditor 5 v35.1.0
 
-For the entire list of changes introduced in version 35.1.0, see the [changelog for CKEditor 5 v35.1.0](https://github.com/ckeditor/ckeditor5/blob/stable/CHANGELOG.md#3510-2022-08-29).
+For the entire list of changes introduced in version 35.1.0, see the [release notes for CKEditor 5 v35.1.0](https://github.com/ckeditor/ckeditor5/releases/tag/v35.1.0).
 
 Listed below are the most important changes that require your attention when upgrading to CKEditor 5 v35.1.0.
 
 ### Changes to API providing the accessible navigation between editing roots and toolbars on <kbd>Alt</kbd>+<kbd>F10</kbd> and <kbd>Esc</kbd> keystrokes
 
 <info-box>
-	This information applies only to integrators who develop their own {@link framework/guides/custom-editor-creator editor creators} from scratch by using the {@link module:core/editor/editor~Editor} and {@link module:core/editor/editorui~EditorUI} classes as building blocks.
+	This information applies only to integrators who develop their own editor creators from scratch by using the {@link module:core/editor/editor~Editor} and {@link module:core/editor/editorui~EditorUI} classes as building blocks.
 </info-box>
 
 * The `enableToolbarKeyboardFocus()` helper that allowed the navigation has been removed. To bring this functionality back, use the {@link module:core/editor/editorui~EditorUI#addToolbar} method instead.
@@ -209,7 +209,7 @@ Keep in mind that you do not need to worry about showing and hiding your custom 
 
 In this release, several changes were made to improve the accessibility and overall contrast of the UI. Since we understand that some integrations may prefer the previous look of the editor, we prepared a CSS snippet you can use to bring it back.
 
-For the best results, make sure the custom properties listed below are set after the main editor style sheets. For more information, please check out the {@link framework/guides/theme-customization theme customization guide}.
+For the best results, make sure the custom properties listed below are set after the main editor style sheets. For more information, please check out the {@link framework/theme-customization theme customization guide}.
 
 ```css
 :root {
@@ -257,7 +257,7 @@ The `BalloonPanelView.arrowVerticalOffset` static property is now `arrowHeightOf
 
 ## Update to CKEditor 5 v35.0.0
 
-For the entire list of changes introduced in version 35.0.0, see the [changelog for CKEditor 5 v35.0.0](https://github.com/ckeditor/ckeditor5/blob/stable/CHANGELOG.md#3500-2022-07-29).
+For the entire list of changes introduced in version 35.0.0, see the [release notes for CKEditor 5 v35.0.0](https://github.com/ckeditor/ckeditor5/releases/tag/v35.0.0).
 
 Listed below are the most important changes that require your attention when upgrading to CKEditor 5 v35.0.0.
 

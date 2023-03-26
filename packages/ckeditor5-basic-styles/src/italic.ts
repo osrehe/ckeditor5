@@ -7,14 +7,14 @@
  * @module basic-styles/italic
  */
 
-import { Plugin, type PluginDependencies } from 'ckeditor5/src/core';
+import { Plugin } from 'ckeditor5/src/core';
 import ItalicEditing from './italic/italicediting';
 import ItalicUI from './italic/italicui';
 
 /**
  * The italic feature.
  *
- * For a detailed overview check the {@glink features/basic-styles Basic styles feature documentation}
+ * For a detailed overview check the {@glink features/basic-styles Basic styles feature} guide
  * and the {@glink api/basic-styles package page}.
  *
  * This is a "glue" plugin which loads the {@link module:basic-styles/italic/italicediting~ItalicEditing} and
@@ -24,8 +24,8 @@ export default class Italic extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
-	public static get requires(): PluginDependencies {
-		return [ ItalicEditing, ItalicUI ];
+	public static get requires() {
+		return [ ItalicEditing, ItalicUI ] as const;
 	}
 
 	/**
@@ -33,11 +33,5 @@ export default class Italic extends Plugin {
 	 */
 	public static get pluginName(): 'Italic' {
 		return 'Italic';
-	}
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ Italic.pluginName ]: Italic;
 	}
 }

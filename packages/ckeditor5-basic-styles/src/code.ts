@@ -7,7 +7,7 @@
  * @module basic-styles/code
  */
 
-import { Plugin, type PluginDependencies } from 'ckeditor5/src/core';
+import { Plugin } from 'ckeditor5/src/core';
 import CodeEditing from './code/codeediting';
 import CodeUI from './code/codeui';
 
@@ -16,7 +16,7 @@ import '../theme/code.css';
 /**
  * The code feature.
  *
- * For a detailed overview check the {@glink features/basic-styles Basic styles feature documentation}
+ * For a detailed overview check the {@glink features/basic-styles Basic styles feature} guide
  * and the {@glink api/basic-styles package page}.
  *
  * This is a "glue" plugin which loads the {@link module:basic-styles/code/codeediting~CodeEditing code editing feature}
@@ -26,8 +26,8 @@ export default class Code extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
-	public static get requires(): PluginDependencies {
-		return [ CodeEditing, CodeUI ];
+	public static get requires() {
+		return [ CodeEditing, CodeUI ] as const;
 	}
 
 	/**
@@ -35,11 +35,5 @@ export default class Code extends Plugin {
 	 */
 	public static get pluginName(): 'Code' {
 		return 'Code';
-	}
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ Code.pluginName ]: Code;
 	}
 }

@@ -11,7 +11,12 @@ const path = require( 'path' );
 
 const ROOT_DIRECTORY = path.join( __dirname, '..', '..' );
 
-module.exports = { getCkeditor5Plugins, writeFile, normalizePath };
+module.exports = {
+	getCkeditor5Plugins,
+	writeFile,
+	normalizePath,
+	addTypeScriptLoader
+};
 
 /**
  * Returns array with plugin paths.
@@ -44,9 +49,28 @@ function getCkeditor5Plugins() {
  *
  * @returns {Promise.<Array>}
  */
-function getCkeditor5ModulePaths() {
+async function getCkeditor5ModulePaths() {
+	const files = await globPromise( 'node_modules/@ckeditor/ckeditor5-!(dev-)/src/**/*.[jt]s', { cwd: ROOT_DIRECTORY } );
+	const ossPackages = ( await globPromise( 'packages/*/', { cwd: ROOT_DIRECTORY } ) )
+		.map( packagePath => {
+			const shortPackageName = packagePath.replace( /^packages/, '' );
+
+			return new RegExp( shortPackageName );
+		} );
+
+	return files.filter( modulePath => {
+		return ossPackages.some( pkg => modulePath.match( pkg ) );
+	} );
+}
+
+/**
+ * @param {String} pattern
+ * @param {Object} options
+ * @returns {Promise.<Array.<String>>}
+ */
+function globPromise( pattern, options ) {
 	return new Promise( ( resolve, reject ) => {
-		glob( 'packages/*/src/**/*.js', { cwd: ROOT_DIRECTORY }, ( err, files ) => {
+		glob( pattern, options, ( err, files ) => {
 			if ( err ) {
 				return reject( err );
 			}
@@ -65,7 +89,7 @@ function getCkeditor5ModulePaths() {
 function checkWhetherIsCKEditor5Plugin( modulePath ) {
 	return readFile( path.join( ROOT_DIRECTORY, modulePath ) )
 		.then( content => {
-			const pluginName = path.basename( modulePath, '.js' );
+			const pluginName = path.basename( modulePath.replace( /.[jt]s$/, '' ) );
 
 			if ( content.match( new RegExp( `export default class ${ pluginName } extends Plugin`, 'i' ) ) ) {
 				return Promise.resolve( true );
@@ -119,4 +143,40 @@ function writeFile( filePath, data ) {
  */
 function normalizePath( modulePath ) {
 	return modulePath.split( path.sep ).join( path.posix.sep );
+}
+
+/**
+ * Adds the `ts-loader` with the proper configuration to the passed webpack configuration object
+ * only when CKEditor 5 sources are in TypeScript.
+ *
+ * The snippet adapter is used in different environments
+ *   * Production: processing JavaScript installed from npm.
+ *   * Nightly: processing JavaScript created from compiling TypeScript from the `#master` branches. It simulates
+ *   installing packages from `npm`.
+ *   * Locally: processing TypeScript directly from the `#master` branches.
+ *
+ * Hence, the `ts-loader` must be included only when processing `*.ts` files.
+ *
+ * @param {Object} webpackConfig
+ * @param {String} configFile
+ * @returns {void}
+ */
+function addTypeScriptLoader( webpackConfig, configFile ) {
+	const tsconfigPath = path.join( __dirname, '..', '..', configFile );
+	const coreIndexFile = require.resolve( '@ckeditor/ckeditor5-core' );
+
+	// Do not include the `ts-loader` when processing CKEditor 5 installed as the JavaScript code.
+	if ( coreIndexFile.endsWith( '.ts' ) ) {
+		webpackConfig.module.rules.push( {
+			test: /\.ts$/,
+			use: [
+				{
+					loader: 'ts-loader',
+					options: {
+						configFile: tsconfigPath
+					}
+				}
+			]
+		} );
+	}
 }

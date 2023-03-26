@@ -8,7 +8,7 @@
  */
 import type { HeadingCommand } from '@ckeditor/ckeditor5-heading';
 
-import { Plugin, type PluginDependencies, type Editor } from 'ckeditor5/src/core';
+import { Plugin, type Editor } from 'ckeditor5/src/core';
 import type { Range, Writer } from 'ckeditor5/src/engine';
 import { Delete } from 'ckeditor5/src/typing';
 
@@ -18,15 +18,15 @@ import inlineAutoformatEditing from './inlineautoformatediting';
 /**
  * Enables a set of predefined autoformatting actions.
  *
- * For a detailed overview, check the {@glink features/autoformat Autoformatting feature documentation}
+ * For a detailed overview, check the {@glink features/autoformat Autoformatting} feature guide
  * and the {@glink api/autoformat package page}.
  */
 export default class Autoformat extends Plugin {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
-	public static get requires(): PluginDependencies {
-		return [ Delete ];
+	public static get requires() {
+		return [ Delete ] as const;
 	}
 
 	/**
@@ -52,10 +52,10 @@ export default class Autoformat extends Plugin {
 	 * Adds autoformatting related to the {@link module:list/list~List}.
 	 *
 	 * When typed:
-	 * - `* ` or `- ` &ndash; A paragraph will be changed to a bulleted list.
-	 * - `1. ` or `1) ` &ndash; A paragraph will be changed to a numbered list ("1" can be any digit or a list of digits).
-	 * - `[] ` or `[ ] ` &ndash; A paragraph will be changed to a to-do list.
-	 * - `[x] ` or `[ x ] ` &ndash; A paragraph will be changed to a checked to-do list.
+	 * - `* ` or `- ` &ndash; A paragraph will be changed into a bulleted list.
+	 * - `1. ` or `1) ` &ndash; A paragraph will be changed into a numbered list ("1" can be any digit or a list of digits).
+	 * - `[] ` or `[ ] ` &ndash; A paragraph will be changed into a to-do list.
+	 * - `[x] ` or `[ x ] ` &ndash; A paragraph will be changed into a checked to-do list.
 	 */
 	private _addListAutoformats(): void {
 		const commands = this.editor.commands;
@@ -130,9 +130,9 @@ export default class Autoformat extends Plugin {
 	 *
 	 * It is using a number at the end of the command name to associate it with the proper trigger:
 	 *
-	 * * `heading` with value `heading1` will be executed when typing `#`,
-	 * * `heading` with value `heading2` will be executed when typing `##`,
-	 * * ... up to `heading6` and `######`.
+	 * * `heading` with a `heading1` value will be executed when typing `#`,
+	 * * `heading` with a `heading2` value will be executed when typing `##`,
+	 * * ... up to `heading6` for `######`.
 	 */
 	private _addHeadingAutoformats(): void {
 		const command: HeadingCommand | undefined = this.editor.commands.get( 'heading' );
@@ -224,10 +224,4 @@ function getCallbackFunctionForInlineAutoformat( editor: Editor, attributeKey: s
 		// This way user is able to type a text without attribute used by auto formatter.
 		writer.removeSelectionAttribute( attributeKey );
 	};
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ Autoformat.pluginName ]: Autoformat;
-	}
 }

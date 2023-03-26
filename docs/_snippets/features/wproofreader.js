@@ -25,25 +25,12 @@ ClassicEditor
 		cloudServices: CS_CONFIG,
 		toolbar: {
 			items: [
-				'heading',
-				'|',
-				'bold',
-				'italic',
-				'bulletedList',
-				'numberedList',
-				'|',
-				'outdent',
-				'indent',
-				'|',
-				'blockQuote',
-				'link',
-				'mediaEmbed',
-				'insertTable',
-				'|',
-				'wproofreader',
-				'|',
-				'undo',
-				'redo'
+				'undo', 'redo',
+				'|', 'wproofreader',
+				'|', 'heading',
+				'|', 'bold', 'italic',
+				'|', 'link', 'uploadImage', 'insertTable', 'mediaEmbed',
+				'|', 'bulletedList', 'numberedList', 'outdent', 'indent'
 			]
 		},
 		ui: {
@@ -78,3 +65,14 @@ ClassicEditor
 	.catch( err => {
 		console.error( err.stack );
 	} );
+
+// External source exclusion.
+const metaElement = document.createElement( 'meta' );
+
+metaElement.name = 'x-cke-crawler-ignore-patterns';
+metaElement.content = JSON.stringify( {
+	'request-failure': 'svc.webspellchecker.net',
+	'console-error': [ 'Failed to load resources from' ]
+} );
+
+document.head.appendChild( metaElement );

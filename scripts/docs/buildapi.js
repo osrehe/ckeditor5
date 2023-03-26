@@ -39,7 +39,7 @@ function getConfig( type ) {
 	if ( type === 'typedoc' ) {
 		return {
 			...commonConfig,
-			tsconfig: path.join( ROOT_DIRECTORY, 'tsconfig.docs.json' ),
+			tsconfig: path.join( ROOT_DIRECTORY, 'tsconfig.typedoc.json' ),
 			sourceFiles: [
 				'packages/@(ckeditor|ckeditor5)-*/src/**/*.ts',
 				'!packages/@(ckeditor|ckeditor5)-*/src/lib/**/*.ts',
@@ -59,6 +59,7 @@ function getConfig( type ) {
 			'!packages/@(ckeditor|ckeditor5)-*/src/lib/**/*.js',
 			'!packages/ckeditor5-build-*/src/**/*.js',
 			'external/@(ckeditor5-internal|collaboration-features)/packages/@(ckeditor|ckeditor5)-*/src/**/*.@(js|jsdoc)',
+			'external/@(ckeditor5-internal|collaboration-features)/packages/@(ckeditor|ckeditor5)-*/_src/**/*.@(js|jsdoc)',
 			'!external/@(ckeditor5-internal|collaboration-features)/packages/@(ckeditor|ckeditor5)-*/src/lib/**/*.js',
 			'!external/@(ckeditor5-internal|collaboration-features)/packages/ckeditor5-build-*/src/**/*.js'
 		]

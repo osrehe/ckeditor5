@@ -13,7 +13,7 @@ import GFMDataProcessor from './gfmdataprocessor';
 /**
  * The GitHub Flavored Markdown (GFM) plugin.
  *
- * For a detailed overview, check the {@glink features/markdown Markdown feature documentation}.
+ * For a detailed overview, check the {@glink features/markdown Markdown feature} guide.
  */
 export default class Markdown extends Plugin {
 	/**
@@ -30,11 +30,5 @@ export default class Markdown extends Plugin {
 	 */
 	public static get pluginName(): 'Markdown' {
 		return 'Markdown';
-	}
-}
-
-declare module '@ckeditor/ckeditor5-core' {
-	interface PluginsMap {
-		[ Markdown.pluginName ]: Markdown;
 	}
 }

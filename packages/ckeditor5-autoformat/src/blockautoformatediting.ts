@@ -16,6 +16,8 @@ import { first } from 'ckeditor5/src/utils';
 
 import type Autoformat from './autoformat';
 
+import type { Delete } from 'ckeditor5/src/typing';
+
 /**
  * The block autoformatting engine. It allows to format various block patterns. For example,
  * it can be configured to turn a paragraph starting with `*` and followed by a space into a list item.
@@ -38,13 +40,13 @@ import type Autoformat from './autoformat';
  *
  * Examples of usage:
  *
- * To convert a paragraph to heading 1 when `- ` is typed, using just the command name:
+ * To convert a paragraph into heading 1 when `- ` is typed, using just the command name:
  *
  * ```ts
  * blockAutoformatEditing( editor, plugin, /^\- $/, 'heading1' );
  * ```
  *
- * To convert a paragraph to heading 1 when `- ` is typed, using just the callback:
+ * To convert a paragraph into heading 1 when `- ` is typed, using just the callback:
  *
  * ```ts
  * blockAutoformatEditing( editor, plugin, /^\- $/, ( context ) => {
@@ -63,7 +65,7 @@ import type Autoformat from './autoformat';
  * from the beginning until the caret position.
  * @param callbackOrCommand The callback to execute or the command to run when the text is matched.
  * In case of providing the callback, it receives the following parameter:
- * * {Object} match RegExp.exec() result of matching the pattern to inserted text.
+ * * match RegExp.exec() result of matching the pattern to inserted text.
  */
 export default function blockAutoformatEditing(
 	editor: Editor,
@@ -123,8 +125,8 @@ export default function blockAutoformatEditing(
 			return;
 		}
 
-		// In case a command is bound, do not re-execute it over an existing block style which would result with a style removal.
-		// Instead just drop processing so that autoformat trigger text is not lost. E.g. writing "# " in a level 1 heading.
+		// In case a command is bound, do not re-execute it over an existing block style which would result in a style removal.
+		// Instead, just drop processing so that autoformat trigger text is not lost. E.g. writing "# " in a level 1 heading.
 		if ( command && command.value === true ) {
 			return;
 		}
@@ -170,7 +172,9 @@ export default function blockAutoformatEditing(
 			range.detach();
 
 			editor.model.enqueueChange( () => {
-				editor.plugins.get( 'Delete' ).requestUndoOnBackspace();
+				const deletePlugin: Delete = editor.plugins.get( 'Delete' );
+
+				deletePlugin.requestUndoOnBackspace();
 			} );
 		} );
 	} );

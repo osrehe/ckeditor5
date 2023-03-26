@@ -9,12 +9,10 @@
 
 import ColorTableView from './ui/colortableview';
 
-import type { FontFamilyOption } from './fontfamily';
-import type { FontSizeOption } from './fontsize';
+import type { FontFamilyOption, FontSizeOption } from './fontconfig';
 import type { ColorDefinition, DropdownView } from 'ckeditor5/src/ui';
 import type { ArrayOrItem } from 'ckeditor5/src/utils';
 import type {
-	DowncastWriter,
 	ViewAttributeElement,
 	ViewElement,
 	MatcherPattern,
@@ -43,7 +41,7 @@ export const FONT_COLOR = 'fontColor';
 export const FONT_BACKGROUND_COLOR = 'fontBackgroundColor';
 
 /**
- * Builds a proper {@link module:engine/conversion/conversion~ConverterDefinition converter definition} out of input data.
+ * Builds a proper converter definition out of input data.
  */
 export function buildDefinition(
 	modelAttributeKey: string,
@@ -121,7 +119,7 @@ export function addColorTableToDropdown(
 		documentColorsCount?: number;
 	}
 ): ColorTableView {
-	const locale = dropdownView.locale;
+	const locale = dropdownView.locale!;
 	const colorTableView = new ColorTableView( locale, { colors, columns, removeButtonLabel, documentColorsLabel, documentColorsCount } );
 
 	dropdownView.colorTableView = colorTableView;

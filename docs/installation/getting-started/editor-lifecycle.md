@@ -8,7 +8,7 @@ order: 60
 <info-box hint>
 **Quick recap**
 
-In the {@link installation/getting-started/installing-plugins previous tutorial} you have explored available features and learned how to add them to your editor. This article shows the lifecycle methods used to interact with the editor.
+In the {@link installation/plugins/installing-plugins previous tutorial} you have explored available features and learned how to add them to your editor. This article shows the lifecycle methods used to interact with the editor.
 </info-box>
 
 
@@ -22,7 +22,7 @@ Each CKEditor 5 **build** provides a different **editor class** that handles the
 Most of the examples in the documentation use the `ClassicEditor` class, but things should work in a similar way with other builds.
 
 <info-box>
-	A CKEditor 5 build compiles a specific editor class and a set of plugins. Using builds is the simplest way to include the editor in your application, but you can also {@link installation/advanced/integrating-from-source use the editor classes and plugins directly} for greater flexibility.
+	A CKEditor 5 build compiles a specific editor class and a set of plugins. Using builds is the simplest way to include the editor in your application, but you can also {@link installation/advanced/integrating-from-source-webpack use the editor classes and plugins directly} for greater flexibility.
 </info-box>
 
 {@snippet installation/getting-and-setting-data/build-autosave-source}
